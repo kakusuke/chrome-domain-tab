@@ -1,0 +1,150 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1f1f1f;
+  --muted: #6b6b6b;
+  --line: #e3e3e3;
+  --hover: #f1f3f4;
+  --active: #e8f0fe;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #202124;
+    --fg: #e8eaed;
+    --muted: #9aa0a6;
+    --line: #3c4043;
+    --hover: #2d2e31;
+    --active: #273a55;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.4 system-ui, sans-serif;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  z-index: 1;
+}
+
+#summary {
+  color: var(--muted);
+}
+
+#tree {
+  padding: 4px 0 16px;
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px 3px 8px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "▸";
+  width: 12px;
+  color: var(--muted);
+  transition: transform 0.1s;
+}
+
+details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+summary:hover {
+  background: var(--hover);
+}
+
+.label {
+  font-weight: 600;
+}
+
+.count {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.children {
+  margin-left: 14px;
+  border-left: 1px solid var(--line);
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 4px 3px 12px;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background: var(--hover);
+}
+
+.tab.active {
+  background: var(--active);
+}
+
+.favicon {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.close {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.tab:hover .close {
+  visibility: visible;
+}
+
+.close:hover {
+  background: var(--line);
+  color: var(--fg);
+}

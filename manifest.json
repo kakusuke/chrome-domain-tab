@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Domain Tab Groups",
+  "version": "0.1.0",
+  "description": "タブを登録可能ドメインごとにグループ化して並べ替え、サイドパネルにドメインのツリーを表示します。",
+  "minimum_chrome_version": "116",
+  "permissions": ["tabs", "tabGroups", "sidePanel", "storage", "favicon"],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "src/sidepanel.html"
+  },
+  "action": {
+    "default_title": "ドメインツリーを開く"
+  }
+}
