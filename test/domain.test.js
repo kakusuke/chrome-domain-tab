@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { parseTabUrl, compareLabels, colorFor } from '../src/domain.js';
+import { parseTabUrl, compareLabels, colorFor, toBlocks } from '../src/domain.js';
 
 test('サブドメインを逆順に分解する', () => {
   assert.deepEqual(parseTabUrl('https://api.v2.google.com/path'), {
@@ -42,4 +42,14 @@ test('親ドメインが先、同階層は辞書順', () => {
 
 test('同じサイトは同じ色', () => {
   assert.equal(colorFor('google.com'), colorFor('google.com'));
+});
+
+test('分割ビューのタブを1つのブロックにまとめる', () => {
+  const tabs = [
+    { id: 1, index: 0, splitViewId: -1 },
+    { id: 3, index: 2, splitViewId: 7 },
+    { id: 2, index: 1, splitViewId: 7 },
+    { id: 4, index: 3 },
+  ];
+  assert.deepEqual(toBlocks(tabs).map((b) => b.map((t) => t.id)), [[1], [2, 3], [4]]);
 });

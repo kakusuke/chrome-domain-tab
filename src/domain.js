@@ -81,3 +81,25 @@ export function colorFor(site) {
   for (const ch of site) hash = (hash * 31 + ch.codePointAt(0)) >>> 0;
   return GROUP_COLORS[hash % GROUP_COLORS.length];
 }
+
+/**
+ * タブを並べ替えの単位（ブロック）に分ける。分割ビューの2枚は離せないので1つのブロックにまとめる。
+ * 分割ビューに入っていないタブは splitViewId が noSplit か undefined（Chrome 140 未満）。
+ */
+export function toBlocks(tabs, noSplit = -1) {
+  const blocks = [];
+  const splits = new Map();
+  for (const tab of [...tabs].sort((a, b) => a.index - b.index)) {
+    if (tab.splitViewId === undefined || tab.splitViewId === noSplit) {
+      blocks.push([tab]);
+      continue;
+    }
+    let block = splits.get(tab.splitViewId);
+    if (!block) {
+      splits.set(tab.splitViewId, block = []);
+      blocks.push(block);
+    }
+    block.push(tab);
+  }
+  return blocks;
+}
